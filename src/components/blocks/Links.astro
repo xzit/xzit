@@ -1,0 +1,38 @@
+---
+interface LinkItem {
+  label: string;
+  url: string | null;
+  description: string | null;
+  external?: boolean;
+}
+
+interface Props {
+  title?: string;
+  links?: readonly LinkItem[];
+}
+
+const { title, links } = Astro.props;
+const id = title?.toLowerCase().replace(/\s+/g, '-');
+---
+
+
+<div class="flex flex-col gap-4">
+  {title && <h2 id={id}>{title}</h2>}
+  <ul class="ml-0">
+    {
+      links?.map(link => (
+      <li class="grid grid-cols-[auto_1fr] sm:grid-cols-[max-content_1fr_auto] gap-x-1 before:content-none items-baseline">
+          <a
+            href={link.url}
+            target={link.external ? '_blank' : undefined}
+            rel={link.external ? 'noopener noreferrer' : undefined}
+          >
+            {link.label}
+          </a>
+          <div class="dot-leader min-w-10" />
+          <div class="max-sm:col-span-2">{link.description}</div>
+        </li>
+      ))
+    }
+  </ul>
+</div>

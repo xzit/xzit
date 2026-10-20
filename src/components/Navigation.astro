@@ -1,0 +1,111 @@
+---
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
+const reader = createReader(process.cwd(), keystaticConfig);
+const site = await reader.singletons.site.read();
+const home = await reader.singletons.home.read();
+
+export interface Props {
+  headings?: Array<{depth:number,text: string; slug: string }>
+}
+
+const { headings } = Astro.props;
+const isPostPage = /^\/posts\/[^/]+\/?$/.test(Astro.url.pathname);
+const isHomePage = Astro.url.pathname === '/';
+
+const navItems = [
+  { label: 'Home', url: '/#' },
+  ...(home?.content?.map(block => {
+    const title = block.value?.title || '';
+    const slug = title.toLowerCase().replace(/\s+/g, '-');
+    return {
+      label: title,
+      url: `${isHomePage ? '' : '/' }#${slug}`
+    };
+  }) || [])
+].filter(item => item.label !== '');
+---
+
+<div id="navigation" class="hidden w-full flex-col lg:flex">
+  <aside class="sticky top-22 font-bold">
+    <ul id="main-nav">
+      {isPostPage && headings ? (
+        headings
+          .filter(({ depth }) => depth >= 2 && depth <= 3)
+          .map((heading) => (
+            <li class:list={[heading.depth === 3 && "ml-4"]}>
+              <a href={`#${heading.slug}`} class="smooth-scroll-link">
+                {heading.text}
+              </a>
+            </li>
+          ))
+      ) : (
+        navItems.map(link => (
+          <li class="before:content-none">
+            <a href={link.url} class="no-underline uppercase smooth-scroll-link" data-nav-key={link.label[0].toUpperCase()}>
+              [{link.label[0].toUpperCase()}] {link.label}
+            </a>
+          </li>
+        ))
+      )}
+    </ul>
+  </aside>
+</div>
+
+<script>
+  function handleSmoothScroll(href: string | null) {
+    if (!href) return;
+
+    if (href.includes('#')) {
+      const id = href.split('#')[1];
+
+      if (id === '' || id === 'top') {
+        if (window.location.pathname === '/') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
+        window.location.href = '/';
+        return;
+      }
+
+      const element = document.getElementById(id);
+      if (element) {
+        if (href.startsWith('/') && window.location.pathname !== '/') {
+             window.location.href = href;
+             return;
+        }
+        element.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.location.href = href;
+      }
+    } else {
+      window.location.href = href;
+    }
+  }
+
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    const link = target.closest('a.smooth-scroll-link') as HTMLAnchorElement | null;
+
+    if (link) {
+      const href = link.getAttribute('href');
+      if (href && href.includes('#')) {
+        e.preventDefault();
+        handleSmoothScroll(href);
+      }
+    }
+  });
+
+  window.addEventListener('keydown', (e) => {
+    const target = e.target as HTMLElement;
+    if (!target || target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return;
+
+    const key = e.key.toUpperCase();
+    const navLink = document.querySelector(`[data-nav-key="${key}"]`) as HTMLAnchorElement | null;
+
+    if (navLink) {
+      const href = navLink.getAttribute('href');
+      handleSmoothScroll(href);
+    }
+  });
+</script>

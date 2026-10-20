@@ -1,0 +1,47 @@
+---
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
+const reader = createReader(process.cwd(), keystaticConfig);
+const site = await reader.singletons.site.read();
+---
+
+<div id="footer" class="border-border border-t max-sm:py-4 mt-4 flex max-sm:flex-col-reverse justify-between gap-2">
+  <div class="gap-4 items-center px-4 sm:py-2 text-center md:text-left">
+    <span>
+      &copy; {new Date().getFullYear()} Xzit. All rights reserved.
+    </span>
+  </div>
+  <div class="flex max-sm:flex-col-reverse gap-y-4">
+    <div class="flex gap-4 items-center sm:border-l border-border px-4 sm:py-2 justify-center">
+    {site?.socials.map(social => (
+      <a href={social.url} target="_blank" class="flex">
+        {social.label}
+      </a>
+    ))}
+    </div>
+    <div class="text-center content-center sm:border-l border-border px-4 sm:py-2 text-muted-foreground">
+      <span id="footer-clock"></span> GMT-6
+    </div>
+  </div>
+</div>
+
+<script>
+  function updateClock() {
+    const now = new Date();
+    const timeString = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/Mexico_City',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+    }).format(now);
+
+    const clockElement = document.getElementById('footer-clock');
+    if (clockElement) {
+      clockElement.textContent = timeString;
+    }
+  }
+
+  setInterval(updateClock, 1000);
+  updateClock();
+</script>

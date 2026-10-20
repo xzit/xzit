@@ -1,0 +1,47 @@
+---
+import { Markdoc } from '@astrojs/markdoc/config';
+
+interface Props {
+  title?: string;
+  category?: readonly any[];
+}
+
+const { title, category } = Astro.props;
+const id = title?.toLowerCase().replace(/\s+/g, '-');
+---
+
+<div class="flex flex-col gap-4">
+  {title && <h2 id={id}>{title}</h2>}
+
+  <div class="flex flex-col gap-4">
+    {category?.map((cat) => (
+      <div class="flex flex-col gap-4">
+        {cat.title && <h3>{cat.title}</h3>}
+
+        <div class="flex flex-col gap-4">
+          {cat.items?.map((item: any) => (
+            <div class="flex flex-col gap-4">
+              {item.title && <h4>{item.title}</h4>}
+
+              <div
+                set:html={Markdoc.renderers.html(
+                  Markdoc.transform(item.content?.node as any),
+                )}
+              />
+
+              {item.tags && item.tags.length > 0 && (
+                <div class="flex flex-wrap gap-x-2 gap-y-1">
+                  {item.tags.map((tag: string) => (
+                    <span class="text-muted-foreground">
+                      &lbrack;{tag}&rbrack;
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</div>

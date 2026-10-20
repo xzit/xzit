@@ -1,0 +1,31 @@
+---
+interface Props {
+  posts: any[];
+  title?: string;
+}
+
+const { posts, title = "Posts" } = Astro.props;
+const id = title.toLowerCase().replace(/\s+/g, '-');
+---
+
+<div class="flex flex-col gap-4">
+  <h2 id={id}>{title}</h2>
+  <ul class="ml-0">
+    {
+      posts.map(post => (
+        <li class="grid grid-cols-[auto_1fr_max-content] gap-x-1 before:content-none items-baseline min-w-0">
+          <a href={`/posts/${post.id}`} class="truncate" title={post.data.title}>{post.data.title}</a>
+          <div class="dot-leader min-w-10" />
+          <time datetime={post.data.date} class="text-muted-foreground shrink-0 whitespace-nowrap">
+            {new Intl.DateTimeFormat('en-US', {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric',
+              timeZone: 'UTC'
+            }).format(new Date(post.data.date))}
+          </time>
+        </li>
+      ))
+    }
+  </ul>
+</div>

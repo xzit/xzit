@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --font-sans: var(--font-victor-mono);
+  --font-serif: var(--font-victor-mono);
+  --font-mono: var(--font-victor-mono);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+}
+
+:root {
+  --background: oklch(91.7% 0.0067 160.1);
+  --foreground: oklch(21.8% 0.0073 145.3);
+  --muted: oklch(85.3% 0.0051 139.4);
+  --muted-foreground: oklch(46.8% 0.0059 145.3);
+  --border: oklch(85.3% 0.0051 139.4);
+}
+
+.dark {
+  --background: oklch(21.8% 0.0073 145.3);
+  --foreground: oklch(91.7% 0.0067 160.1);
+  --muted: oklch(28% 0.011 145.3);
+  --muted-foreground: oklch(76.6% 0.0119 139.4);
+  --border: oklch(28% 0.011 145.3);
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  a {
+    @apply underline underline-offset-2 inline-block;
+  }
+
+  a:hover {
+    @apply no-underline text-background bg-foreground;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold uppercase scroll-mt-20;
+  }
+
+  h1::before {
+    content: "# ";
+    @apply text-muted-foreground;
+  }
+
+  h2::before {
+    content: "## ";
+    @apply text-muted-foreground;
+  }
+
+  h3::before {
+    content: "### ";
+    @apply text-muted-foreground;
+  }
+
+  ul {
+    @apply list-none list-inside ml-4;
+  }
+
+  li::before {
+    content: "– ";
+    @apply text-muted-foreground -ml-4;
+  }
+
+  article {
+    @apply flex flex-col gap-4;
+  }
+
+  #content ul {
+    @apply flex flex-col gap-y-2;
+  }
+
+  #navigation a,
+  #content a,
+  #footer a {
+    @apply px-1 -mx-1;
+  }
+
+  .dot-leader {
+    @apply before:content-['................................................................................'] overflow-hidden text-muted-foreground;
+  }
+}
+
+@theme {
+  --animate-cursor: blink 1s steps(1) infinite;
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+}

@@ -1,0 +1,20 @@
+---
+import { Icon } from 'astro-icon/components'
+import ThemeIcon from '../components/ThemeIcon.astro';
+---
+
+<div id="header" class="sticky top-0 w-full flex justify-between border-border border-b items-center bg-background/90 backdrop-blur-sm z-50">
+  <a href="/" class="px-4 sm:px-6 border-r border-border h-12 flex items-center bg-background hover:text-foreground/80 -mr-px">
+    <Icon name="logo" width="100%" height="24px" class="max-sm:hidden" />
+    <Icon name="iso" width="100%" height="24px" class="sm:hidden" />
+  </a>
+  <div class="flex divide-x divide-x-reverse divide-border">
+    <a href="https://github.com/xzit" target="_blank" class="size-12 px-4 py-4 flex items-center hover:bg-muted hover:text-foreground">
+      <Icon name="github" class="size-4" />
+    </a>
+    <ThemeIcon />
+    <a href="mailto:x@tenso.co" class="px-4 h-12 flex gap-2 items-center uppercase no-underline bg-foreground font-bold hover:bg-muted-foreground text-background hover:text-background">
+      Contact <Icon name="arrow-up-right" class="size-3" />
+    </a>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+---
+import "../styles.css";
+import { Font } from "astro:assets";
+import Header from "../components/Header.astro"
+import Navigation from "../components/Navigation.astro"
+import Footer from "../components/Footer.astro"
+
+export interface Props {
+  title: string;
+  description?: string;
+  headings?: Array<{depth:number,text: string; slug: string }>
+}
+
+const { title, description, headings } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description || "Default site description"} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <Font cssVariable="--font-victor-mono" preload />
+  </head>
+  <body class="bg-background text-foreground font-sans text-xs/6 tracking-wider font-normal font-features-['ss07'] flex flex-col min-h-screen">
+    <Header />
+    <div class="w-full p-6 lg:p-10 flex gap-4 flex-1">
+      <Navigation headings={headings} />
+      <div id="content" class="w-full max-w-160 flex flex-col gap-8 mx-auto shrink-0">
+        <slot />
+      </div>
+      <div class="w-full hidden lg:flex" />
+    </div>
+    <Footer />
+  </body>
+</html>

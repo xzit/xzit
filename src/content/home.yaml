@@ -1,0 +1,61 @@
+title: Software Engineer building digital products
+description: >
+  Xzit is a software engineer, product designer, and
+  [entrepreneur](https://joaquinolivas.com/?ref=xzit.dev) working across
+  technology, product design, and e-commerce to create digital products that
+  help people make a living doing what they love.
+
+
+  He is the founder of [Emprende](https://emprende.uno/?ref=xzit.dev) and
+  [Cosplayland](https://cosplay.land/?ref=xzit.dev), platforms that help
+  entrepreneurs sell online and creators connect with their audiences.
+seoTitle: Xzit // Full-stack Developer & Product Engineer
+seoDescription: >
+  Xzit is a software engineer, product designer, and entrepreneur building
+  digital products and e-commerce solutions. He combines engineering, design,
+  and business strategy to build end-to-end digital solutions.
+content:
+  - discriminant: links
+    value:
+      title: Projects
+      links:
+        - label: Emprende
+          url: https://emprende.uno/?ref=xzit.dev
+          description: E-commerce platform for entrepreneurs and local businesses.
+          external: true
+        - label: Cosplayland
+          url: https://cosplay.land/?ref=xzit.dev
+          description: A platform connecting cosplay creators with their audiences.
+          external: true
+  - discriminant: features
+    value:
+      title: Experience
+      category:
+        - items:
+            - title: Software Engineer
+              content: >
+                - Built an HR management system for employee records and
+                requests, integrating organizational hierarchies with automated
+                approval workflows.
+
+                - Developed a multi-tenant OpenID Connect (OIDC) provider with
+                organization-level roles and permissions for shared
+                authentication and access control.
+
+                - Engineered an approval workflow microservice with sequential
+                steps and context-aware routing by office, department, reporting
+                line, and job position.
+
+                - Enabled organizations to build internal applications using
+                shared HR APIs, access controls, and approval workflows.
+              tags:
+                - Turborepo
+                - Next.js
+                - React
+                - TypeScript
+                - Tailwind CSS
+                - shadcn/ui
+                - NestJS
+                - Prisma ORM
+                - PostgreSQL
+                - Better Auth

@@ -1,0 +1,14 @@
+# dependencies
+node_modules/
+.astro/
+
+# production
+build/
+
+# env
+.env*.local
+.env
+
+# TypeScript
+*.tsbuildinfo
+.vercel
