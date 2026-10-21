@@ -42,6 +42,10 @@ content:
                 organization-level roles and permissions for shared
                 authentication and access control.
 
+                - Implemented an application-scoped business relationship
+                service, enabling organizations to define independent
+                relationships across applications.
+
                 - Engineered an approval workflow microservice with sequential
                 steps and context-aware routing by office, department, reporting
                 line, and job position.
